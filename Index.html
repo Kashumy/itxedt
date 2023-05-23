@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en" onclick="document.documentElement.requestFullscreen()">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document Keyboard test</title>
+</head>
+<body>
+  <div id="keyboard">
+  	<div id="keys">
+    <div class="key" onclick="insertText('q')">q</div>
+    <div class="key" onclick="insertText('w')">w</div>
+    <div class="key" onclick="insertText('e')">e</div>
+    <div class="key" onclick="insertText('r')">r</div>
+    <div class="key" onclick="insertText('t')">t</div>
+    <div class="key" onclick="insertText('y')">y</div>
+    <div class="key" onclick="insertText('u')">u</div>
+    <div class="key" onclick="insertText('i')">i</div>
+    <div class="key" onclick="insertText('o')">o</div>
+    <div class="key" onclick="insertText('p')">p</div>
+<br>
+    <div class="key" onclick="insertText('a')">a</div>
+    <div class="key" onclick="insertText('s')">s</div>
+    <div class="key" onclick="insertText('d')">d</div>
+    <div class="key" onclick="insertText('f')">f</div>
+    <div class="key" onclick="insertText('g')">g</div>
+    <div class="key" onclick="insertText('h')">h</div>
+    <div class="key" onclick="insertText('j')">j</div>
+    <div class="key" onclick="insertText('k')">k</div>
+    <div class="key" onclick="insertText('l')">l</div>
+<br>
+    <div class="key" onclick="insertText('z')">z</div>
+    <div class="key" onclick="insertText('x')">x</div>
+    <div class="key" onclick="insertText('c')">c</div>
+    <div class="key" onclick="insertText('v')">v</div>
+    <div class="key" onclick="insertText('b')">b</div>
+    <div class="key" onclick="insertText('n')">n</div>
+    <div class="key" onclick="insertText('m')">m</div>
+    
+    <div class="key" onclick="insertText('<')"><</div>
+    <div class="key" onclick="insertText('>')">></div>
+    <div class="key" onclick="insertText('+')">+</div>
+    <br>
+    <div class="key" onclick="insertText('-')">-</div>
+    <div class="key" onclick="insertText('/')">/</div>
+    <div class="key" onclick="insertText('=')">=</div>
+    
+    <div class="key" onclick="insertText('@')">@</div>
+    <div class="key" onclick="insertText('(')">(</div>
+    <div class="key" onclick="insertText(')')">)</div>
+    <div class="key" onclick="insertText('_')">_</div>
+    <div class="key" onclick='insertText(`&OpenCurlyDoubleQuote;`)'>"</div>
+    <br>
+    <br>
+    <div class="key" ontouchmove="moveCursor('left')" onclick="moveCursor('left')">←</div>
+    <div class="key" ontouchmove="moveCursor('right')" onclick="moveCursor('right')">→</div>
+    <div class="key" onclick="insertCode()">&nbsp;</div>
+    <div class="key" ontouchmove="deleteChar()" onclick="deleteChar()">✕</div>
+    <div class="key" onclick="insertBreak()">br</div><br><br>
+			<br>
+    </div>
+        <p onclick="swiczkeyboard()" style="position:absolute ;bottom :0px; left :20px ;font-size :20px" >Num ⤸</p>
+        
+  </div>
+
+  <style>
+body {
+  font-family: monospace;
+  background: #000000;
+  color: white;
+}
+
+#keyboard {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #0E0E0E;
+  padding: 0px;
+  z-index :3;
+}
+
+.key {
+  display: inline-block;
+  width: 2vw;
+  height: 2vh;
+  background: #1E1E1E;
+  color: white;
+  padding: 10px;
+  margin: 2px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.3s, color 0.3s;
+  position: relative;
+}
+
+.key .text-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  float: left;
+}
+
+.key .text-container span {
+  font-size: 15px;
+}
+#keys {
+  display: inline-block;
+  float: left;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  width :100vw;
+  margin-left :1%;
+}
+
+
+.key::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+
+.key:active {
+  background-color: #01AAA0;
+  color: #00F1EB;
+  box-shadow: 0 0 10px rgba(0, 255, 228, 0.75);
+}
+
+.text {
+  cursor: text;
+  word-spacing: 5px;
+  line-height: 30px;
+  position: relative;
+  font-family: "Courier New", monospace;
+  font-size: 15px;
+  white-space: pre-wrap;
+}
+
+.text::before {
+  content: attr(data-placeholder);
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  color: #555555;
+}
+
+.highlight {
+  background-color: #FF0000;
+  width: 5px;
+  height: 30px;
+  
+  top: 50%;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  z-index: 1;
+}
+*{
+	user-select: none ;
+}
+.scroll_spacing {
+	width :100vw;
+	height :100vh;
+}
+
+  </style>
+
+  <pre class="text"  onclick="setActiveTextElement(this)">GNU Kano </pre>
+  <pre class="text"  onclick="setActiveTextElement(this)">HelloWorld</pre>
+  <div class="scroll_spacing">
+  	
+  </div>
+  <script>
+    var activeTextElement = null;
+    var caretStart = 0;
+    var caretEnd = 0;
+
+function setActiveTextElement(element) {
+  if (activeTextElement !== null) {
+    activeTextElement.style.backgroundColor = 'transparent';
+    removeHighlightFromText(activeTextElement);
+  }
+  activeTextElement = element;
+  if (activeTextElement !== null) {
+    activeTextElement.style.backgroundColor = '';
+    activeTextElement.focus();
+    caretStart = activeTextElement.textContent.length;
+    caretEnd = caretStart;
+    updateCaretPosition();
+  }
+}
+
+function removeHighlightFromText(element) {
+  var highlightSpans = element.querySelectorAll('.highlight');
+  highlightSpans.forEach(function(span) {
+    span.classList.remove('highlight');
+  });
+}
+
+    function insertText(char) {
+      if (activeTextElement === null) {
+        return;
+      }
+      deleteSelection();
+      var text = activeTextElement.textContent;
+      activeTextElement.textContent = text.slice(0, caretStart) + char + text.slice(caretStart);
+      caretStart += char.length;
+      caretEnd = caretStart;
+      updateCaretPosition();
+    }
+
+    function insertBreak() {
+      if (activeTextElement === null) {
+        return;
+      }
+      deleteSelection();
+      var text = activeTextElement.textContent;
+      activeTextElement.textContent = text.slice(0, caretStart) + '\n' + text.slice(caretStart);
+      caretStart += 1;
+      caretEnd = caretStart;
+      updateCaretPosition();
+    }
+
+    function moveCursor(direction) {
+      if (activeTextElement === null) {
+        return;
+      }
+      if (direction === 'left') {
+        caretStart = Math.max(0, caretStart - 1);
+        caretEnd = caretStart;
+      } else if (direction === 'right') {
+        caretStart = Math.min(caretStart + 1, activeTextElement.textContent.length);
+        caretEnd = caretStart;
+      }
+      updateCaretPosition();
+    }
+
+    function deleteChar() {
+      if (activeTextElement === null) {
+        return;
+      }
+      if (caretStart === caretEnd) {
+        caretStart = Math.max(0, caretStart - 1);
+      }
+      var text = activeTextElement.textContent;
+      activeTextElement.textContent = text.slice(0, caretStart) + text.slice(caretEnd);
+      caretEnd = caretStart;
+      updateCaretPosition();
+    }
+
+    function deleteSelection() {
+      if (activeTextElement === null) {
+        return;
+      }
+      if (caretStart !== caretEnd) {
+        var text = activeTextElement.textContent;
+        activeTextElement.textContent = text.slice(0, caretStart) + text.slice(caretEnd);
+        caretEnd = caretStart;
+        updateCaretPosition();
+      }
+    }
+function escapeHTML(text) {
+  var map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+
+  return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+}
+
+function updateCaretPosition() {
+  if (activeTextElement === null) {
+    return;
+  }
+
+  var text = activeTextElement.innerText;
+  var placeholder = activeTextElement.getAttribute('data-placeholder');
+  var newContent = '';
+
+  for (var i = 0; i < text.length + 1; i++) {
+    var char = text.charAt(i);
+    var escapedChar = escapeHTML(char);
+    
+    if (i + 1 >= caretStart && i <= caretEnd - 1) {
+      newContent += '<span class="highlight">' + escapedChar + '</span>';
+    } else {
+      newContent += escapedChar;
+    }
+  }
+
+  activeTextElement.innerHTML = newContent;
+
+  if (text.length === 0) {
+    activeTextElement.setAttribute('data-placeholder', '');
+  } else {
+    activeTextElement.removeAttribute('data-placeholder');
+  }
+}
+
+
+        function insertBreak() {
+        	deleteSelection();
+        	var text = activeTextElement.textContent;
+        	activeTextElement.textContent = text.slice(0, caretStart) + '\n' + text.slice(caretStart);
+        	caretStart += 1;
+        	caretEnd = caretStart;
+        	updateCaretPosition();
+        }
+     function insertCode() {
+     	deleteSelection();
+     	var text = activeTextElement.textContent;
+     	activeTextElement.textContent = text.slice(0, caretStart) + ' ' + text.slice(caretStart);
+     	caretStart += 1;
+     	caretEnd = caretStart;
+     	updateCaretPosition();
+     }
+     
+     var swicz=0
+     function swiczkeyboard(){
+     	if(swicz===0){
+     		document.getElementById('keyboard').innerHTML =`
+     		  	<div id="keys">
+    <div class="key" onclick="insertText('q')">q</div>
+    <div class="key" onclick="insertText('w')">w</div>
+    <div class="key" onclick="insertText('e')">e</div>
+    <div class="key" onclick="insertText('r')">r</div>
+    <div class="key" onclick="insertText('t')">t</div>
+    <div class="key" onclick="insertText('y')">y</div>
+    <div class="key" onclick="insertText('u')">u</div>
+    <div class="key" onclick="insertText('i')">i</div>
+    <div class="key" onclick="insertText('o')">o</div>
+    <div class="key" onclick="insertText('p')">p</div>
+<br>
+    <div class="key" onclick="insertText('a')">a</div>
+    <div class="key" onclick="insertText('s')">s</div>
+    <div class="key" onclick="insertText('d')">d</div>
+    <div class="key" onclick="insertText('f')">f</div>
+    <div class="key" onclick="insertText('g')">g</div>
+    <div class="key" onclick="insertText('h')">h</div>
+    <div class="key" onclick="insertText('j')">j</div>
+    <div class="key" onclick="insertText('k')">k</div>
+    <div class="key" onclick="insertText('l')">l</div>
+<br>
+    <div class="key" onclick="insertText('z')">z</div>
+    <div class="key" onclick="insertText('x')">x</div>
+    <div class="key" onclick="insertText('c')">c</div>
+    <div class="key" onclick="insertText('v')">v</div>
+    <div class="key" onclick="insertText('b')">b</div>
+    <div class="key" onclick="insertText('n')">n</div>
+    <div class="key" onclick="insertText('m')">m</div>
+    
+    <div class="key" onclick="insertText('<')"><</div>
+    <div class="key" onclick="insertText('>')">></div>
+    <div class="key" onclick="insertText('+')">+</div>
+    <br>
+    <div class="key" onclick="insertText('-')">-</div>
+    <div class="key" onclick="insertText('/')">/</div>
+    <div class="key" onclick="insertText('=')">=</div>
+    
+    <div class="key" onclick="insertText('@')">@</div>
+    <div class="key" onclick="insertText('(')">(</div>
+    <div class="key" onclick="insertText(')')">)</div>
+    <div class="key" onclick="insertText('_')">_</div>
+    <div class="key" onclick='insertText("&OpenCurlyDoubleQuote;")'>"</div>
+    <br>
+    <br>
+    <div class="key" ontouchmove="moveCursor('left')" onclick="moveCursor('left')">←</div>
+    <div class="key" ontouchmove="moveCursor('right')" onclick="moveCursor('right')">→</div>
+    <div class="key" onclick="insertCode()">&nbsp;</div>
+    <div class="key" ontouchmove="deleteChar()" onclick="deleteChar()">✕</div>
+    <div class="key" onclick="insertBreak()">br</div><br><br>
+			<br>
+    </div>
+        <p onclick="swiczkeyboard()" style="position:absolute ;bottom :0px; left :20px ;font-size :20px" >Num ⤸</p>
+        
+  </div>
+     		`
+     		setTimeout(function (){
+     			swicz=1
+     		},200)
+     		
+     	}
+     	if(swicz===1){
+     		document.getElementById('keyboard').innerHTML = `
+     		  			     		  	<div id="keys">
+     		  			    <div class="key" onclick="insertText('1')">1</div>
+     		  			    <div class="key" onclick="insertText('2')">2</div>
+     		  			    <div class="key" onclick="insertText('3')">3</div>
+     		  			    <div class="key" onclick="insertText('4')">4</div>
+     		  			    <div class="key" onclick="insertText('5')">5</div>
+     		  			    <div class="key" onclick="insertText('6')">6</div>
+     		  			    <div class="key" onclick="insertText('7')">7</div>
+     		  			    <div class="key" onclick="insertText('8')">8</div>
+     		  			    <div class="key" onclick="insertText('9')">9</div>
+     		  			    <div class="key" onclick="insertText('0')">0</div>
+     		  			<br>
+     		  			    <div class="key" onclick="insertText('%')">%</div>
+     		  			    <div class="key" onclick="insertText('*')">*</div>
+     		  			    <div class="key" onclick="insertText('[')">[</div>
+     		  			    <div class="key" onclick="insertText(']')">]</div>
+     		  			    <div class="key" onclick="insertText('{')">{</div>
+     		  			    <div class="key" onclick="insertText('}')">}</div>
+     		  			    <div class="key" onclick="insertText('<')"><</div>
+     		  			    <div class="key" onclick="insertText('>')">></div>
+     		  			    <div class="key" onclick="insertText('^')">¡</div>
+     		  			<br>
+     		  			    <div class="key" onclick="insertText('~')">~</div>
+     		  			    <div class="key" onclick="insertText('?')">?</div>
+     		  			    <div class="key" onclick="insertText('!')">!</div>
+     		  			    <div class="key" onclick="insertText(':')">:</div>
+     		  			    <div class="key" onclick="insertText('#')">#</div>
+     		  			    <div class="key" onclick="insertText('÷')">÷</div>
+     		  			    <div class="key" onclick="insertText(';')">;</div>
+     		  			    
+     		  			    <div class="key" onclick="insertText(',')">,</div>
+     		  			    <div class="key" onclick="insertText('.')">.</div>
+     		  			    <div class="key" onclick="insertText('©')">©</div>
+     		  			    <br>
+     		  			    <div class="key" onclick="insertText('®')">®</div>
+     		  			    <div class="key" onclick="insertText('™')">™</div>
+     		  			    <div class="key" onclick="insertText('=')">=</div>
+     		  			    
+     		  			    <div class="key" onclick="insertText('@')">@</div>
+     		  			    <div class="key" onclick="insertText('(')">(</div>
+     		  			    <div class="key" onclick="insertText(')')">)</div>
+     		  			    <div class="key" onclick="insertText('_')">_</div>
+     		  			    <div class="key" onclick='insertText("&OpenCurlyDoubleQuote;")'>"</div>
+     		  			    <br>
+     		  			    <br>
+     		  			    <div class="key" ontouchmove="moveCursor('left')" onclick="moveCursor('left')">←</div>
+     		  			    <div class="key" ontouchmove="moveCursor('right')" onclick="moveCursor('right')">→</div>
+     		  			    <div class="key" onclick="insertCode()">&nbsp;</div>
+     		  			    <div class="key" ontouchmove="deleteChar()" onclick="deleteChar()">✕</div>
+     		  			    <div class="key" onclick="insertBreak()">br</div><br><br>
+     		  						<br>
+     		  			    </div>
+     		  			        <p onclick="swiczkeyboard()" style="position:absolute ;bottom :0px; left :20px ;font-size :20px" >Num ⤸</p>
+     		  			        
+     		  			  </div>
+     		  			     		`
+     		swicz=0
+     	}
+     }
+     
+     
+     
+  </script>
+</body>
+</html>
